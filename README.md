@@ -12,9 +12,9 @@ https://www.fernandok.com/2018/10/introducao-programacao-do-esp32.html
 https://curtocircuito.com.br/blog/Categoria%20IoT/conhecendo-esp32
 
 ## Observações importantes:
-1.Sempre se atentar a pinagem do ESP32, pois existem diferentes modelos, com diferentes quantidades de pinos. Então sempre tenha o dataseet em mãos
-2.Não se esquecer que alguns pinos são apenas para input, outros apenas output.. e assim por diante. Lembrando que em alguns modelos não é possivel utilizar o pino gpio0
-3.Quando for gravar um novo código no ESP, quando aparecer a mesagem "connecting........", pressionar o botão BOOT.
+1. Sempre se atentar a pinagem do ESP32, pois existem diferentes modelos, com diferentes quantidades de pinos. Então sempre tenha o dataseet em mãos
+2. Não se esquecer que alguns pinos são apenas para input, outros apenas output.. e assim por diante. Lembrando que em alguns modelos não é possivel utilizar o pino gpio0
+3. Quando for gravar um novo código no ESP, quando aparecer a mesagem "connecting........", pressionar o botão BOOT.
 
 ## Informações Importantes (fonte: blog do Fernando K)
 1. O INPUT não funciona apenas no GPIO0
