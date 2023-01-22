@@ -6,6 +6,6 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  leitura = (analogRead(2));
+  leitura = analogRead(2);
   Serial.println(leitura);
 }
