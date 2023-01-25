@@ -1,0 +1,75 @@
+#include <WiFi.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
+#include "index_html.h"
+
+//informações do wifi
+const char* ssid = "Valdirene";
+const char* password = "wifi@@@@";
+
+//pinos GPIO
+int led = 2;  //pino do led
+
+//Parâmetros do PWM
+const int freq = 5000;
+const int canal = 0;
+const int ciclo = 8;  //Definir o ciclo de trabahlo como 8 bits (0-255)
+
+//Parâmetros passados pela a URL
+const char* PARAM_INPUT_1 = "canal"; //Canal pwm que o led está utilizando
+const char* PARAM_INPUT_2 = "brilho"; //valor de 0 a 255
+
+//Criando o servidor na porta 80
+AsyncWebServer server(80);
+
+void setup() {
+  Serial.begin(115200);
+
+  //Configurações do pwm
+  ledcSetup(canal, freq, ciclo);
+  ledcAttachPin(led, canal);
+
+   //Conectando a rede Wifi
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED){
+    delay(1000);
+    Serial.println("Conectando ao wifi ... ");
+  }
+
+  //Exibe o ip fornecido pelo DHCP
+  Serial.println(WiFi.localIP());
+
+  //Rotas
+  server.on("/", HTTP_GET, [] (AsyncWebServerRequest *request){
+    request->send_P(200, "text/html", index_html);
+  });
+  
+  server.on("/led", HTTP_GET, [] (AsyncWebServerRequest *request){
+    String nCanal;
+    String vBrilho;
+
+    if(request->hasParam(PARAM_INPUT_1) && request->hasParam(PARAM_INPUT_2)){
+      nCanal = request->getParam(PARAM_INPUT_1)->value();
+      vBrilho = request->getParam(PARAM_INPUT_2)->value();
+      ledcWrite(nCanal.toInt(), vBrilho.toInt());
+    }else{
+      nCanal = "Não há mensagem";
+      vBrilho = "Não há mensagem";
+    }
+    Serial.print("Canal: ");
+    Serial.print(nCanal);
+    Serial.print(" está com o brilho em: ");
+    Serial.println(vBrilho);
+    request->send(200,"text/plain", "OK");
+
+
+  });//Fechamento do server on "/"
+
+  server.begin();
+  
+}
+
+void loop() {
+
+
+}
