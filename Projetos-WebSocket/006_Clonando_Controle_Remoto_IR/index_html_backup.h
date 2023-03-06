@@ -38,9 +38,10 @@ const char index_html[] PROGMEM = R"rawliteral(
     <h1>Trabalhando com WebSocket</h1>
     <section>
         <p >Controlando TV</p>
-        <p><button id="menu">Menu</button></p>
-        <p><button id="vmais">Volume +</button></p>
-        <p><button id="vmenos">Volume -</button></p>
+        <p><button class="botao" id="onOff"></button></p>
+        <p><button class="botao" id="menu">Menu</button></p>
+        <p><button class="botao" id="vmais">Volume +</button></p>
+        <p><button class="botao" id="vmenos">Volume -</button></p>
     </section>
 
     <script>
@@ -80,6 +81,12 @@ const char index_html[] PROGMEM = R"rawliteral(
         }
 
         function checaBotao(){
+            const botao = document.getElementsByClassName("botao");
+            for(var i = 0; i < botao.length; i++){
+                botao[i].addEventListener('click', pressionou);
+            }
+
+            /*
             var m = document.getElementById('menu');
             var vmais = document.getElementById('vmais');
             var vmenos = document.getElementById('vmenos');
@@ -87,13 +94,18 @@ const char index_html[] PROGMEM = R"rawliteral(
             m.addEventListener('click', pressionou);
             vmais.addEventListener('click', pressionou);
             vmenos.addEventListener('click', pressionou);
+            */
         }
 
+        //A função pressionou recebe pega o id do elemento pressionado e passa para o servidor
         function pressionou(event){
           var mensagem = event.target.id
           websocket.send(mensagem);
         }
 
+        //Trecho de código antigo que foi substituido por pressionou
+        //Esse trecho de código é mais fácil de entender, 
+        //mas gera muitas linhas de código conforme a quantidade de botões aumenta
         /*
         function menu(){
             websocket.send('menu');

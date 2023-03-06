@@ -17,10 +17,11 @@ const char index_html[] PROGMEM = R"rawliteral(
         }
         section{
             margin: auto;
-            padding: 10px 20px 10px 20px;
-            width: 100px;
+            padding: 10px;
+            width: 120px;
             border: 1px solid rgba(255, 255, 255, 0.336);
             box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.425);
+
         }
         h1{
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.719);
@@ -28,20 +29,63 @@ const char index_html[] PROGMEM = R"rawliteral(
         p{
             font-size: 1.2em;
             font-weight: bold;
-            margin: 2px;
+            margin: 5px 0px 5px 0px;
             text-shadow: 1px 1px 3px black;
         }
+        #onOff{
+            color: red;
+        }
+        div{
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.336);
+            padding: 2px;
+            font-size: 10px;
+        }
+        div#volume{
+            margin-right: 0px;
+        }
+        button#mute{
+            
+        }
+        div#canal{
+            margin-left: 0px;
+
+        }
+        p#tv{
+            padding-top: 30px;
+        }
+        
 
     </style>
 </head>
 <body>
-    <h1>Trabalhando com WebSocket</h1>
+    <h1>Controle TV</h1>
     <section>
-        <p >Controlando TV</p>
-        <p><button class="botao" id="onOff"></button></p>
+        <p><button class="botao" id="onOff">⏻</button></p>
         <p><button class="botao" id="menu">Menu</button></p>
-        <p><button class="botao" id="vmais">Volume +</button></p>
-        <p><button class="botao" id="vmenos">Volume -</button></p>
+        <p><button class="botao" id="input">input</button></p>
+        <div id="volume">
+            <p>VOL</p>
+            <p><button class="botao" id="vmais">+</button></p>
+            <p><button class="botao" id="vmenos">-</button></p>
+           
+        </div>
+
+        <button class="botao" id="mute">🔇</button>
+
+        <div id="canal">
+            <p>CH</p>
+            <p><button class="botao" id="cmais">⇧</button></p>
+            <p><button class="botao" id="cmenos">⇩</button></p>
+        </div>
+        <p><button class="botao" id="cima">⬆️</button></p>
+        <p>
+            <button class="botao" id="esquerda">⬅️</button>
+            <button class="botao" id="ok">🆗</button>
+            <button class="botao" id="direita">➡️</button>
+        </p>
+        <p><button class="botao" id="baixo">⬇️</button></p>
+        <p id="tv">TV</p>
     </section>
 
     <script>
