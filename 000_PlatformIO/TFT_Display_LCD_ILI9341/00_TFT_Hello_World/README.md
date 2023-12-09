@@ -1,0 +1,2 @@
+# Hello World utilizando o display ILI9341
+Meu primeiro contato com a biblioteca [TFT_esPI](https://github.com/Bodmer/TFT_eSPI/tree/master). Basicamente apenas imprime Hello World seguido de uma frase na tela, além de uma imagem do globo terrestre.

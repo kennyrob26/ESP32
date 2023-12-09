@@ -1,0 +1,3 @@
+# Trabalhando com GIFs
+É possível trabalhar com GIFs, que nada mais são do que uma sequência de imagens que são reproduzidas sequencialmente em um intervalo de tempo, o intervalo de tempo entre as imagens depende de quantos fps possui esse Gif.  
+Neste exemplo nós temos um conjunto de 6 fotos que são reproduzidas sequencialmente a cada 100 Milissegundos, isso dá a impressão de que o personagem bob-espoja está andando.
