@@ -1,0 +1,156 @@
+// Example of drawing a graphical "switch" and using
+// the touch screen to change it's state.
+
+// This sketch does not use the libraries button drawing
+// and handling functions.
+
+// Based on Adafruit_GFX library onoffbutton example.
+
+// Touch handling for XPT2046 based screens is handled by
+// the TFT_eSPI library.
+
+// Calibration data is stored in SPIFFS so we need to include it
+#include "FS.h"
+
+#include <SPI.h>
+
+#include <TFT_eSPI.h> // Hardware-specific library
+
+TFT_eSPI tft = TFT_eSPI();       // Invoke custom library
+
+// This is the file name used to store the touch coordinate
+// calibration data. Change the name to start a new calibration.
+#define CALIBRATION_FILE "/TouchCalData3"
+
+// Set REPEAT_CAL to true instead of false to run calibration
+// again, otherwise it will only be done once.
+// Repeat calibration if you change the screen rotation.
+#define REPEAT_CAL false
+
+void touch_calibrate();
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+void setup(void)
+{
+  Serial.begin(115200);
+  tft.init();
+
+  // Set the rotation before we calibrate
+  tft.setRotation(0);
+
+  // call screen calibration
+  touch_calibrate();
+
+  // clear screen
+  tft.fillScreen(TFT_BLACK);
+  /*
+  uint8_t altura =  30; 
+  uint8_t largura=  60;
+  uint8_t x      = 120;
+  uint8_t y      =  50;
+
+  tft.setTextDatum(MC_DATUM);
+  tft.fillRoundRect(x, y, largura, altura, 15, TFT_BLUE);
+
+  uint8_t r = altura/2;
+  tft.fillCircle(x+r, y+r, r-4, TFT_WHITE);
+
+  tft.fillCircle(x+largura-r, y+r, r-4, TFT_WHITE);
+  */
+}
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+void loop()
+{
+  uint8_t altura =  40; 
+  uint8_t largura=  80;
+  uint8_t r = altura/2;
+  uint8_t x      = 30;
+  uint8_t y      =  50;
+
+  tft.setTextDatum(MC_DATUM);
+  tft.fillRoundRect(x-2, y-2, largura+4, altura+4, (altura+4)/2, TFT_LIGHTGREY);
+  tft.fillRoundRect(x, y, largura, altura, r, TFT_DARKGREY);
+  
+
+  uint8_t margin = 4;
+
+  tft.fillCircle(x+r, y+r, r-margin, TFT_WHITE);
+
+  delay(2000);
+
+  tft.fillRoundRect(x, y, largura, altura, r, TFT_BLUE);
+
+  tft.fillCircle(x+largura-r, y+r, r-margin, TFT_WHITE);
+
+  delay(2000);
+
+}
+//------------------------------------------------------------------------------------------
+
+void touch_calibrate()
+{
+  uint16_t calData[5];
+  uint8_t calDataOK = 0;
+
+  // check file system exists
+  if (!SPIFFS.begin()) {
+    Serial.println("Formatting file system");
+    SPIFFS.format();
+    SPIFFS.begin();
+  }
+
+  // check if calibration file exists and size is correct
+  if (SPIFFS.exists(CALIBRATION_FILE)) {
+    if (REPEAT_CAL)
+    {
+      // Delete if we want to re-calibrate
+      SPIFFS.remove(CALIBRATION_FILE);
+    }
+    else
+    {
+      File f = SPIFFS.open(CALIBRATION_FILE, "r");
+      if (f) {
+        if (f.readBytes((char *)calData, 14) == 14)
+          calDataOK = 1;
+        f.close();
+      }
+    }
+  }
+
+  if (calDataOK && !REPEAT_CAL) {
+    // calibration data valid
+    tft.setTouch(calData);
+  } else {
+    // data not valid so recalibrate
+    tft.fillScreen(TFT_BLACK);
+    tft.setCursor(20, 0);
+    tft.setTextFont(2);
+    tft.setTextSize(1);
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+
+    tft.println("Touch corners as indicated");
+
+    tft.setTextFont(1);
+    tft.println();
+
+    if (REPEAT_CAL) {
+      tft.setTextColor(TFT_RED, TFT_BLACK);
+      tft.println("Set REPEAT_CAL to false to stop this running again!");
+    }
+
+    tft.calibrateTouch(calData, TFT_MAGENTA, TFT_BLACK, 15);
+
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
+    tft.println("Calibration complete!");
+
+    // store data
+    File f = SPIFFS.open(CALIBRATION_FILE, "w");
+    if (f) {
+      f.write((const unsigned char *)calData, 14);
+      f.close();
+    }
+  }
+}
