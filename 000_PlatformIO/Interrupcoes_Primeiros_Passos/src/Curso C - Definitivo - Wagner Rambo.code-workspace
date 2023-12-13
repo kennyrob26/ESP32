@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../Curso C - Definitivo - Wagner Rambo"
+		},
+		{
+			"name": "sensor_umidade_solo",
+			"path": "../../../../../PlatformIO/Projects/sensor_umidade_solo"
+		},
+		{
+			"name": "Interrupcoes_Primeiros_Passos",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}

@@ -14,13 +14,13 @@ Vou apontar alguns pontos importantes, além de alguns métodos que tive dificul
 `#define REPEAT_CAL false` -> Define se o display deverá ter seu touch calibrado a cada inicialização do microcontrolador, se `true` ele irá pedir para calibrar o display a cada inicialização, se `false`, ele calibra um única vez e salva as configurações no arquivo definido em `CALIBRATION_FILE` visto anteriormente.  
 
 `touch_calibrate();` -> É uma função padrão da biblioteca que calibra o display.  
-tft.getTouch(&t_x, &t_y) -> Retorna `true` se algum local da tela for pressionado, e **modifica** os valores das variáveis t_x e t_y com as coordenadas do toque.  
+`tft.getTouch(&t_x, &t_y)` -> Retorna `true` se algum local da tela for pressionado, e **modifica** os valores das variáveis t_x e t_y com as coordenadas do toque.  
 
 ### A Classe TFT_eSPI_Button
 
 `TFT_eSPI_Button botao;` -> Instância um objeto da classe chamado botao  
 
-### Métodos importantes TFT_eSPI_Button
+#### Métodos importantes TFT_eSPI_Button
 
 `botao.initButton(&tft, 120, 130, 100, 60, TFT_WHITE, TFT_BLUE, TFT_WHITE, "TESTE", 1);` -> Inicia o botão com as propriedades setadas.  
 

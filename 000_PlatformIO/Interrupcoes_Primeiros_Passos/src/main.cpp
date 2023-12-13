@@ -14,7 +14,7 @@
 const short   botao  = 2;
 
 //Sempre que algo for modificado tanto no programa principal, quanto na interrupção
-//É importa definir tal variável com volatile para garantir a correta modificações
+//É importante definir tal variável com volatile para garantir a correta modificações
 volatile unsigned long tempoAtual       = 0,
                        tempoAnterior    = 0,
                        tempoPressionado = 0;

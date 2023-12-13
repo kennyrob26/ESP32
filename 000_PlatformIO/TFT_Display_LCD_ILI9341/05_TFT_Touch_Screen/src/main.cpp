@@ -1,9 +1,15 @@
+/*===========================================================
+    Exemplo Simples de como trabalhar com um botão touch screen
+  no display TFT. Para mais informações ler README.md
+=============================================================*/
+
+//================== --- Bibliotecas --- =====================
 #include "FS.h"
 #include <Arduino.h>
 #include <SPI.h>
 #include "TFT_eSPI.h"
 
-//============== --- Instância de Objeto --- ==================
+//============== --- Instância de Classe --- ==================
 
 TFT_eSPI tft = TFT_eSPI();
 
@@ -106,6 +112,9 @@ void loop()
   }
 }
 
+//====================== --- Funções --- =========================
+
+//Esta é uma função da pópria biblioteca responsável por calibrar o touch
 void touch_calibrate()
 {
   uint16_t calData[5];
@@ -170,3 +179,5 @@ void touch_calibrate()
     }
   }
 }
+
+//====================== --- FIM --- =========================
